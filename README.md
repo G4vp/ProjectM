@@ -1,2 +1,2 @@
-# MistbornProject
+# ProjectM
 3D game inspired by the Mistborn books
