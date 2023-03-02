@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://crhxdgyci8ei2"]
+
+[ext_resource type="Script" path="res://Scripts/Player.cs" id="1_inoph"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_iup1l"]
+size = Vector3(10.232, 0.107, 10.984)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oo3ao"]
+size = Vector3(10.232, 0.107, 10.984)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u085d"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_150vb"]
+
+[node name="Level" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.211309, 0.453154, 0, 0.906308, 0.422618, -0.5, -0.365998, 0.784886, 5, 5.82843, 3.82843)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("BoxMesh_iup1l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_oo3ao")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+script = ExtResource("1_inoph")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
+fov = 69.8681
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_u085d")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_150vb")
