@@ -9,11 +9,19 @@ public partial class Player : CharacterBody3D
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
+	public Camera3D camera;
+	public float mouseSensibility = 0.005f;
+	public float cameraAngleV = 0;
+
+	private float _rotationX;
+	private float _rotationY;
+	public override void _Ready(){
+		camera = GetNode<Camera3D>("Camera3D");
+	}
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector3 velocity = Velocity;
 		
-
 		// Add the gravity.
 		if (!IsOnFloor())
 			velocity.Y -= gravity * (float)delta;
@@ -38,6 +46,30 @@ public partial class Player : CharacterBody3D
 		}
 
 		Velocity = velocity;
+		
 		MoveAndSlide();
+	}
+
+	public override void _UnhandledInput(InputEvent @event){
+		CameraDirection(@event);
+	}
+
+
+	public void CameraDirection(InputEvent @event){
+		if(@event is InputEventMouseMotion mouseMotion){
+			GD.Print(mouseMotion.Relative.X);
+			_rotationX += -mouseMotion.Relative.X * mouseSensibility;
+			_rotationY += -mouseMotion.Relative.Y * mouseSensibility;
+
+			Transform3D transform = Transform;
+			transform.Basis = Basis.Identity;
+			Transform = transform;
+
+			RotateObjectLocal(Vector3.Up, _rotationX);
+			RotateObjectLocal(Vector3.Right, _rotationY);
+
+
+
+		}
 	}
 }
