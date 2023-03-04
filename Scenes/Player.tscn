@@ -1,6 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b37y6bt774eij"]
+[gd_scene load_steps=9 format=3 uid="uid://b37y6bt774eij"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_aga7w"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lhsdk"]
+size = Vector3(0.808, 1.293, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u085d"]
 
@@ -28,10 +31,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 fov = 69.8681
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_lhsdk")
+
+[node name="CollisionBean" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_u085d")
 
 [node name="Body" type="MeshInstance3D" parent="."]
-visible = false
 mesh = SubResource("CapsuleMesh_150vb")
 
 [node name="FullArm" type="Node3D" parent="."]

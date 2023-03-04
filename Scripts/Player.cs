@@ -3,15 +3,19 @@ using System;
 
 public partial class Player : CharacterBody3D
 {
-	public const float Speed = 5.0f;
+	public const float Speed = 7.0f;
 	public const float JumpVelocity = 4.5f;
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 	public float mouseSensibility = 0.005f;
+
+	
 	private float _rotationX;
 	private float _rotationY;
 
 	private bool toggleCursorCaptured = true;
+
+	private bool DoubleJump = true;
 	public override void _Ready(){
 
 		//     Captures the mouse. The mouse will be hidden and its position locked at the center
@@ -24,12 +28,27 @@ public partial class Player : CharacterBody3D
 		Vector3 velocity = Velocity;
 		
 		// Add the gravity.
-		if (!IsOnFloor())
+		if (!IsOnFloor()){
 			velocity.Y -= gravity * (float)delta;
+
+			if(Input.IsActionJustPressed("jump") && DoubleJump){
+				velocity.Y = JumpVelocity;
+				DoubleJump = false;
+			}
+
+			if(Input.IsActionJustPressed("crouch")){
+				velocity.Y -= gravity * (float)delta * 200;
+				GD.Print(velocity.Y);
+			}
+		}
+		else{
+			DoubleJump = true;
+		}
 
 		// Handle Jump.
 		if (Input.IsActionJustPressed("jump") && IsOnFloor())
 			velocity.Y = JumpVelocity;
+		
 
 		// Get the input direction and handle the movement/deceleration.
 		// As good practice, you should replace UI actions with custom gameplay actions.
@@ -56,6 +75,7 @@ public partial class Player : CharacterBody3D
 
 		FreeCursor(@event);
 	}
+
 
 
 	public void CameraDirection(InputEvent @event){

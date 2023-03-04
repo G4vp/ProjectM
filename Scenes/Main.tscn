@@ -1,18 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://crhxdgyci8ei2"]
+[gd_scene load_steps=5 format=3 uid="uid://crhxdgyci8ei2"]
 
+[ext_resource type="PackedScene" uid="uid://bb83ytl1rbs2q" path="res://Scenes/Ground.tscn" id="1_dpnv1"]
 [ext_resource type="PackedScene" uid="uid://b37y6bt774eij" path="res://Scenes/Player.tscn" id="1_l3g57"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p6d8i"]
-albedo_color = Color(0.913725, 0.858824, 0.886275, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_iup1l"]
-material = SubResource("StandardMaterial3D_p6d8i")
-size = Vector3(80, 0.107, 80)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_oo3ao"]
-size = Vector3(80, 0.107, 80)
-
-[sub_resource type="BoxMesh" id="BoxMesh_ntalw"]
+[ext_resource type="PackedScene" uid="uid://b7cnwhb6amrut" path="res://Scenes/Walls.tscn" id="3_fus5i"]
+[ext_resource type="PackedScene" uid="uid://88mlo5k66mkh" path="res://Scenes/Box.tscn" id="4_ddvlx"]
 
 [node name="Level" type="Node3D"]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
@@ -21,18 +12,26 @@ transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 transform = Transform3D(1.11111, 0, 0, 0, 0.785674, 0.785674, 0, -0.785674, 0.785674, 0, 45.5556, 31.1111)
 rotation_edit_mode = 2
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-mesh = SubResource("BoxMesh_iup1l")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_oo3ao")
+[node name="Ground" parent="." instance=ExtResource("1_dpnv1")]
 
 [node name="Player" parent="." instance=ExtResource("1_l3g57")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.86561, 0)
 rotation_edit_mode = 2
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4)
-mesh = SubResource("BoxMesh_ntalw")
+[node name="Walls" parent="." instance=ExtResource("3_fus5i")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 22.364, 10, -23.636)
+
+[node name="Box" parent="." instance=ExtResource("4_ddvlx")]
+transform = Transform3D(9, 0, 0, 0, 0.3, 0, 0, 0, 3, 11.6, 0.6, -6)
+
+[node name="Box2" parent="." instance=ExtResource("4_ddvlx")]
+transform = Transform3D(4.2, 0, 0, 0, 0.4, 0, 0, 0, 5.8, 11.6, 1.08, -0.784444)
+
+[node name="Box3" parent="." instance=ExtResource("4_ddvlx")]
+transform = Transform3D(4.2, 0, 0, 0, 0.4, 0, 0, 0, 5.8, 10.4889, 1.98222, 6.02889)
+
+[node name="Box4" parent="." instance=ExtResource("4_ddvlx")]
+transform = Transform3D(4.2, 0, 0, 0, 0.4, 0, 0, 0, 5.8, 16.0444, 3.89333, 7.14)
+
+[node name="Box5" parent="." instance=ExtResource("4_ddvlx")]
+transform = Transform3D(4.2, 0, 0, 0, 0.4, 0, 0, 0, 5.8, 7.64445, 5.89333, 12.94)
