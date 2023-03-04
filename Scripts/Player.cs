@@ -5,18 +5,19 @@ public partial class Player : CharacterBody3D
 {
 	public const float Speed = 5.0f;
 	public const float JumpVelocity = 4.5f;
-
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-
-	public Camera3D camera;
 	public float mouseSensibility = 0.005f;
-	public float cameraAngleV = 0;
-
 	private float _rotationX;
 	private float _rotationY;
+
+	private bool toggleCursorCaptured = true;
 	public override void _Ready(){
-		camera = GetNode<Camera3D>("Camera3D");
+
+		//     Captures the mouse. The mouse will be hidden and its position locked at the center
+        //     of the window manager's window.
+		Input.MouseMode = Input.MouseModeEnum.Captured;
+		
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -52,12 +53,17 @@ public partial class Player : CharacterBody3D
 
 	public override void _UnhandledInput(InputEvent @event){
 		CameraDirection(@event);
+
+		FreeCursor(@event);
 	}
 
 
 	public void CameraDirection(InputEvent @event){
+		
+
 		if(@event is InputEventMouseMotion mouseMotion){
-			GD.Print(mouseMotion.Relative.X);
+
+			
 			_rotationX += -mouseMotion.Relative.X * mouseSensibility;
 			_rotationY += -mouseMotion.Relative.Y * mouseSensibility;
 
@@ -70,6 +76,17 @@ public partial class Player : CharacterBody3D
 
 
 
+		}
+	}
+
+	public void FreeCursor(InputEvent @event){
+		if(@event is InputEventKey key && key.IsActionPressed("freeCursor")){
+			if(toggleCursorCaptured){
+				Input.MouseMode = Input.MouseModeEnum.Visible;
+			}else{
+				Input.MouseMode = Input.MouseModeEnum.Captured;
+			}
+			toggleCursorCaptured = !toggleCursorCaptured;
 		}
 	}
 }

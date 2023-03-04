@@ -1,12 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://crhxdgyci8ei2"]
+[gd_scene load_steps=6 format=3 uid="uid://crhxdgyci8ei2"]
 
 [ext_resource type="PackedScene" uid="uid://b37y6bt774eij" path="res://Scenes/Player.tscn" id="1_l3g57"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_p6d8i"]
+albedo_color = Color(0.913725, 0.858824, 0.886275, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_iup1l"]
-size = Vector3(10.232, 0.107, 10.984)
+material = SubResource("StandardMaterial3D_p6d8i")
+size = Vector3(80, 0.107, 80)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oo3ao"]
-size = Vector3(10.232, 0.107, 10.984)
+size = Vector3(80, 0.107, 80)
 
 [sub_resource type="BoxMesh" id="BoxMesh_ntalw"]
 
@@ -14,7 +18,8 @@ size = Vector3(10.232, 0.107, 10.984)
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866025, 0.043578, 0.498098, 0, 0.996195, -0.087156, -0.5, 0.0754793, 0.86273, 5.21131, 4.92212, 4.19443)
+transform = Transform3D(1.11111, 0, 0, 0, 0.785674, 0.785674, 0, -0.785674, 0.785674, 0, 45.5556, 31.1111)
+rotation_edit_mode = 2
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
@@ -25,7 +30,8 @@ mesh = SubResource("BoxMesh_iup1l")
 shape = SubResource("BoxShape3D_oo3ao")
 
 [node name="Player" parent="." instance=ExtResource("1_l3g57")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86561, 0)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.86561, 0)
+rotation_edit_mode = 2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4)
