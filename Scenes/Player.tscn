@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://b37y6bt774eij"]
+[gd_scene load_steps=10 format=3 uid="uid://b37y6bt774eij"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_aga7w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lhsdk"]
 size = Vector3(0.808, 1.293, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q041t"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u085d"]
 
@@ -33,6 +35,11 @@ fov = 69.8681
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_lhsdk")
 
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_q041t")
+
 [node name="CollisionBean" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_u085d")
 
@@ -50,3 +57,5 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, -0.2)
 mesh = SubResource("BoxMesh_26f7a")
 skeleton = NodePath("../Hand")
+
+[connection signal="body_entered" from="Area3D" to="." method="BodyEnteredInArea"]

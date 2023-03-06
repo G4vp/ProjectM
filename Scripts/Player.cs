@@ -109,4 +109,8 @@ public partial class Player : CharacterBody3D
 			toggleCursorCaptured = !toggleCursorCaptured;
 		}
 	}
+
+	public void BodyEnteredInArea(PhysicsBody3D body){
+		DoubleJump = true;
+	}
 }
