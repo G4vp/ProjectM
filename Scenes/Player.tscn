@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b37y6bt774eij"]
+[gd_scene load_steps=11 format=3 uid="uid://b37y6bt774eij"]
 
 [ext_resource type="Script" path="res://Scripts/Player.cs" id="1_aga7w"]
 
@@ -25,6 +25,9 @@ albedo_color = Color(0.760784, 0.870588, 0.976471, 1)
 material = SubResource("StandardMaterial3D_ly6u5")
 size = Vector3(0.134, 0.124, 1)
 
+[sub_resource type="BoxMesh" id="BoxMesh_3rhhb"]
+size = Vector3(0.05, 0.05, 0.05)
+
 [node name="Player" type="CharacterBody3D"]
 script = ExtResource("1_aga7w")
 
@@ -33,6 +36,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
 fov = 69.8681
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
 shape = SubResource("BoxShape3D_lhsdk")
 
 [node name="Area3D" type="Area3D" parent="."]
@@ -57,5 +61,13 @@ skeleton = NodePath("../..")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 0, -0.2)
 mesh = SubResource("BoxMesh_26f7a")
 skeleton = NodePath("../Hand")
+
+[node name="RayCast3D" type="RayCast3D" parent="FullArm"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.4, -5.96046e-08)
+target_position = Vector3(0, -2.187, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="FullArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -2.9)
+mesh = SubResource("BoxMesh_3rhhb")
 
 [connection signal="body_entered" from="Area3D" to="." method="BodyEnteredInArea"]

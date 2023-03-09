@@ -2,26 +2,35 @@ using Godot;
 using System;
 
 public partial class Player : CharacterBody3D
-{
+{	
+	// Atributos para fisica
 	public const float Speed = 7.0f;
 	public const float JumpVelocity = 4.5f;
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-	public float mouseSensibility = 0.005f;
 
 	
-	private float _rotationX;
-	private float _rotationY;
 
 	private bool toggleCursorCaptured = true;
+	
+	// Nodos
+	RayCast3D pickUpRaycast;
 
+	// Movement
 	private bool DoubleJump = true;
+
+	private float _rotationX;
+	private float _rotationY;
+	public float mouseSensibility = 0.005f;
+
+
 	public override void _Ready(){
 
 		//     Captures the mouse. The mouse will be hidden and its position locked at the center
         //     of the window manager's window.
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		
+		pickUpRaycast = GetNode<RayCast3D>("FullArm/RayCast3D");
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -44,7 +53,6 @@ public partial class Player : CharacterBody3D
 		else{
 			DoubleJump = true;
 		}
-
 		// Handle Jump.
 		if (Input.IsActionJustPressed("jump") && IsOnFloor())
 			velocity.Y = JumpVelocity;
@@ -68,6 +76,10 @@ public partial class Player : CharacterBody3D
 		Velocity = velocity;
 		
 		MoveAndSlide();
+
+		if(pickUpRaycast.IsColliding()){
+			GD.Print(pickUpRaycast.GetCollider().Get("name"));
+		}
 	}
 
 	public override void _UnhandledInput(InputEvent @event){

@@ -1,9 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://crhxdgyci8ei2"]
+[gd_scene load_steps=7 format=3 uid="uid://crhxdgyci8ei2"]
 
 [ext_resource type="PackedScene" uid="uid://bb83ytl1rbs2q" path="res://Scenes/Ground.tscn" id="1_dpnv1"]
 [ext_resource type="PackedScene" uid="uid://b37y6bt774eij" path="res://Scenes/Player.tscn" id="1_l3g57"]
 [ext_resource type="PackedScene" uid="uid://b7cnwhb6amrut" path="res://Scenes/Walls.tscn" id="3_fus5i"]
 [ext_resource type="PackedScene" uid="uid://88mlo5k66mkh" path="res://Scenes/Box.tscn" id="4_ddvlx"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_qckbd"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_au0kl"]
 
 [node name="Level" type="Node3D"]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
@@ -46,3 +50,15 @@ transform = Transform3D(4.2, 0, 0, 0, 0.4, 0, 0, 0, 5.8, 16.0444, 3.89333, 7.14)
 
 [node name="Box5" parent="ObjectsInTheScene" instance=ExtResource("4_ddvlx")]
 transform = Transform3D(4.2, 0, 0, 0, 0.4, 0, 0, 0, 5.8, 7.64445, 5.89333, 12.94)
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, 0)
+mass = 0.39
+can_sleep = false
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("SphereMesh_qckbd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_au0kl")
