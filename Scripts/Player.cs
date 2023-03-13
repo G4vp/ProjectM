@@ -3,34 +3,34 @@ using System;
 
 public partial class Player : CharacterBody3D
 {	
-	// Atributos para fisica
+	// Atributos para las fisicas
 	public const float Speed = 7.0f;
 	public const float JumpVelocity = 4.5f;
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-
-	
-
 	private bool toggleCursorCaptured = true;
 	
 	// Nodos
-	RayCast3D pickUpRaycast;
-
+	RayCast3D interactionRaycast;
+	Marker3D mark;
 	// Movement
-	private bool DoubleJump = true;
-
 	private float _rotationX;
 	private float _rotationY;
+	private bool doubleJump = true;
 	public float mouseSensibility = 0.005f;
 
+	// Pick Up Objects
 
+	public RigidBody3D pickedObject;
+	int pullPower = 4;
 	public override void _Ready(){
 
 		//     Captures the mouse. The mouse will be hidden and its position locked at the center
         //     of the window manager's window.
 		Input.MouseMode = Input.MouseModeEnum.Captured;
 		
-		pickUpRaycast = GetNode<RayCast3D>("FullArm/RayCast3D");
+		interactionRaycast = GetNode<RayCast3D>("Camera3D/Interaction");
+		mark = GetNode<Marker3D>("Camera3D/Mark");
 	}
 	public override void _PhysicsProcess(double delta)
 	{
@@ -40,9 +40,9 @@ public partial class Player : CharacterBody3D
 		if (!IsOnFloor()){
 			velocity.Y -= gravity * (float)delta;
 
-			if(Input.IsActionJustPressed("jump") && DoubleJump){
+			if(Input.IsActionJustPressed("jump") && doubleJump){
 				velocity.Y = JumpVelocity;
-				DoubleJump = false;
+				doubleJump = false;
 			}
 
 			if(Input.IsActionJustPressed("crouch")){
@@ -51,7 +51,7 @@ public partial class Player : CharacterBody3D
 			}
 		}
 		else{
-			DoubleJump = true;
+			doubleJump = true;
 		}
 		// Handle Jump.
 		if (Input.IsActionJustPressed("jump") && IsOnFloor())
@@ -74,14 +74,25 @@ public partial class Player : CharacterBody3D
 		}
 
 		Velocity = velocity;
+
+
+		if(pickedObject != null){
+			var a = pickedObject.GlobalTransform.Origin;
+			var b = mark.GlobalTransform.Origin;
+			
+			pickedObject.LinearVelocity = (b-a) * pullPower;
+		}
 		
 		MoveAndSlide();
-
-		if(pickUpRaycast.IsColliding()){
-			GD.Print(pickUpRaycast.GetCollider().Get("name"));
+	}
+	public override void _Input(InputEvent @event){
+		if(@event.IsActionPressed("LAction")){
+			PickObject();
+		}
+		else if(@event.IsActionPressed("RAction")){
+			removeObject();
 		}
 	}
-
 	public override void _UnhandledInput(InputEvent @event){
 		CameraDirection(@event);
 
@@ -122,7 +133,20 @@ public partial class Player : CharacterBody3D
 		}
 	}
 
-	public void BodyEnteredInArea(PhysicsBody3D body){
-		DoubleJump = true;
+	public void WallJumping(PhysicsBody3D body){
+		doubleJump = true;
+	}
+
+	public void PickObject(){
+		GodotObject collider = interactionRaycast.GetCollider();
+		if( collider != null && collider is RigidBody3D ridigCollider){
+			pickedObject = ridigCollider;
+		}
+	}
+
+	public void removeObject(){
+		if(pickedObject != null){
+			pickedObject = null;
+		}
 	}
 }
