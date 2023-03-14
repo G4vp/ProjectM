@@ -22,7 +22,7 @@ public partial class Player : CharacterBody3D
 	// Pick Up Objects
 
 	public RigidBody3D pickedObject;
-	int pullPower = 4;
+	int pullPower = 10;
 	public override void _Ready(){
 
 		//     Captures the mouse. The mouse will be hidden and its position locked at the center

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://crhxdgyci8ei2"]
+[gd_scene load_steps=9 format=3 uid="uid://crhxdgyci8ei2"]
 
 [ext_resource type="PackedScene" uid="uid://bb83ytl1rbs2q" path="res://Scenes/Ground.tscn" id="1_dpnv1"]
 [ext_resource type="PackedScene" uid="uid://b37y6bt774eij" path="res://Scenes/Player.tscn" id="1_l3g57"]
@@ -8,6 +8,12 @@
 [sub_resource type="SphereMesh" id="SphereMesh_qckbd"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_au0kl"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_u1pp8"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5ysxx"]
+size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Level" type="Node3D"]
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0, 0, 0)
@@ -53,8 +59,6 @@ transform = Transform3D(4.2, 0, 0, 0, 0.4, 0, 0, 0, 5.8, 7.64445, 5.89333, 12.94
 
 [node name="Ball" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, 0)
-mass = 0.39
-can_sleep = false
 freeze_mode = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
@@ -62,3 +66,33 @@ mesh = SubResource("SphereMesh_qckbd")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
 shape = SubResource("SphereShape3D_au0kl")
+
+[node name="Ball2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 6, 5)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball2"]
+mesh = SubResource("SphereMesh_qckbd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball2"]
+shape = SubResource("SphereShape3D_au0kl")
+
+[node name="Ball3" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 6, 0)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball3"]
+mesh = SubResource("SphereMesh_qckbd")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball3"]
+shape = SubResource("SphereShape3D_au0kl")
+
+[node name="Ball4" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 6, 0)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball4"]
+mesh = SubResource("BoxMesh_u1pp8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball4"]
+shape = SubResource("BoxShape3D_5ysxx")
