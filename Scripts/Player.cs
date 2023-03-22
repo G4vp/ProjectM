@@ -23,6 +23,8 @@ public partial class Player : CharacterBody3D
 
 	public RigidBody3D pickedObject;
 	int pullPower = 10;
+
+	bool PushingObject = false;
 	public override void _Ready(){
 
 		//     Captures the mouse. The mouse will be hidden and its position locked at the center
@@ -80,7 +82,16 @@ public partial class Player : CharacterBody3D
 			var a = pickedObject.GlobalTransform.Origin;
 			var b = mark.GlobalTransform.Origin;
 			
-			pickedObject.LinearVelocity = (b-a) * pullPower;
+			if(PushingObject){
+				pickedObject.ApplyCentralImpulse(mark.GlobalTransform.Basis.Z *50*-1);
+				pickedObject.CollisionLayer = 1;
+
+				PushingObject = false;
+				pickedObject = null;
+
+			}else{
+				pickedObject.LinearVelocity = (b-a) * pullPower;
+			}
 		}
 		
 		MoveAndSlide();
@@ -88,10 +99,14 @@ public partial class Player : CharacterBody3D
 	public override void _Input(InputEvent @event){
 		if(@event.IsActionPressed("LAction")){
 			PickObject();
-		}
-		else if(@event.IsActionPressed("RAction")){
+		}else if(@event.IsActionReleased("LAction")){
 			removeObject();
 		}
+
+		if(@event.IsActionPressed("RAction")){
+			PushObject();
+		}
+		
 	}
 	public override void _UnhandledInput(InputEvent @event){
 		CameraDirection(@event);
@@ -141,11 +156,18 @@ public partial class Player : CharacterBody3D
 		GodotObject collider = interactionRaycast.GetCollider();
 		if( collider != null && collider is RigidBody3D ridigCollider){
 			pickedObject = ridigCollider;
+			pickedObject.CollisionLayer = 0;
+		}
+	}
+	public void PushObject(){
+		if(pickedObject != null){
+			PushingObject = true;
 		}
 	}
 
 	public void removeObject(){
 		if(pickedObject != null){
+			pickedObject.CollisionLayer = 1;
 			pickedObject = null;
 		}
 	}
