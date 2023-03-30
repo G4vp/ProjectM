@@ -23,7 +23,6 @@ public partial class Player : CharacterBody3D
 
 	public RigidBody3D pickedObject;
 	int pullPower = 10;
-
 	bool PushingObject = false;
 	public override void _Ready(){
 
@@ -34,8 +33,44 @@ public partial class Player : CharacterBody3D
 		interactionRaycast = GetNode<RayCast3D>("Camera3D/Interaction");
 		mark = GetNode<Marker3D>("Camera3D/Mark");
 	}
+	
 	public override void _PhysicsProcess(double delta)
 	{
+		Movement3D(delta);
+
+		
+		if(pickedObject != null){
+			var a = pickedObject.GlobalTransform.Origin;
+			var b = mark.GlobalTransform.Origin;
+			
+			pickedObject.LinearVelocity = (b-a) * pullPower;
+			
+		}
+		
+		MoveAndSlide();
+	}
+	public override void _Input(InputEvent @event){
+
+		if(@event.IsActionPressed("LAction")){
+			PickObject();
+		}else if(@event.IsActionReleased("LAction")){
+			removeObject();
+		}
+
+		if(@event.IsActionPressed("RAction")){
+			PushObject();
+		}
+		
+	}
+	public override void _UnhandledInput(InputEvent @event){
+		CameraDirection(@event);
+
+		FreeCursor(@event);
+	}
+
+	//====================================================================================================
+
+	public void Movement3D(double delta){
 		Vector3 velocity = Velocity;
 		
 		// Add the gravity.
@@ -61,7 +96,6 @@ public partial class Player : CharacterBody3D
 		
 
 		// Get the input direction and handle the movement/deceleration.
-		// As good practice, you should replace UI actions with custom gameplay actions.
 		Vector2 inputDir = Input.GetVector("right", "left", "up", "down");
 		Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 		if (direction != Vector3.Zero)
@@ -76,45 +110,7 @@ public partial class Player : CharacterBody3D
 		}
 
 		Velocity = velocity;
-
-
-		if(pickedObject != null){
-			var a = pickedObject.GlobalTransform.Origin;
-			var b = mark.GlobalTransform.Origin;
-			
-			if(PushingObject){
-				pickedObject.ApplyCentralImpulse(mark.GlobalTransform.Basis.Z *50*-1);
-				pickedObject.CollisionLayer = 1;
-
-				PushingObject = false;
-				pickedObject = null;
-
-			}else{
-				pickedObject.LinearVelocity = (b-a) * pullPower;
-			}
-		}
-		
-		MoveAndSlide();
 	}
-	public override void _Input(InputEvent @event){
-		if(@event.IsActionPressed("LAction")){
-			PickObject();
-		}else if(@event.IsActionReleased("LAction")){
-			removeObject();
-		}
-
-		if(@event.IsActionPressed("RAction")){
-			PushObject();
-		}
-		
-	}
-	public override void _UnhandledInput(InputEvent @event){
-		CameraDirection(@event);
-
-		FreeCursor(@event);
-	}
-
-
 
 	public void CameraDirection(InputEvent @event){
 		
@@ -131,9 +127,6 @@ public partial class Player : CharacterBody3D
 
 			RotateObjectLocal(Vector3.Up, _rotationX);
 			RotateObjectLocal(Vector3.Right, _rotationY);
-
-
-
 		}
 	}
 
@@ -152,6 +145,8 @@ public partial class Player : CharacterBody3D
 		doubleJump = true;
 	}
 
+	//====================================================================================================
+
 	public void PickObject(){
 		GodotObject collider = interactionRaycast.GetCollider();
 		if( collider != null && collider is RigidBody3D ridigCollider){
@@ -162,6 +157,14 @@ public partial class Player : CharacterBody3D
 	public void PushObject(){
 		if(pickedObject != null){
 			PushingObject = true;
+		}
+
+		if(PushingObject){
+			pickedObject.ApplyCentralImpulse(mark.GlobalTransform.Basis.Z *50*-1);
+			pickedObject.CollisionLayer = 1;
+
+			PushingObject = false;
+			pickedObject = null;
 		}
 	}
 
