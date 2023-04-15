@@ -56,8 +56,50 @@ transform = Transform3D(4.2, 0, 0, 0, 0.4, 0, 0, 0, 5.8, -9.1556, 1.09333, 7.14)
 [node name="Box5" parent="ObjectsInTheScene" instance=ExtResource("4_ddvlx")]
 transform = Transform3D(4.2, 0, 0, 0, 0.4, 0, 0, 0, 5.8, 7.64445, 5.89333, 12.94)
 
+[node name="Ball3" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 6, 4, 1)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball3"]
+mesh = SubResource("CylinderMesh_yp0py")
+skeleton = NodePath("../../Ball3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball3"]
+shape = SubResource("CylinderShape3D_pubd0")
+
+[node name="Ball" type="RigidBody3D" parent="Ball3"]
+transform = Transform3D(0.258819, -0.836516, 0.482963, 0.836516, -0.0558857, -0.545085, 0.482963, 0.545085, 0.685295, 1.55111, -1.32885, -1.65396)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball3/Ball"]
+mesh = SubResource("CylinderMesh_yp0py")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball3/Ball"]
+shape = SubResource("CylinderShape3D_pubd0")
+
+[node name="Ball4" type="RigidBody3D" parent="."]
+transform = Transform3D(0.258819, -0.836516, 0.482963, 0.933012, 0.087097, -0.349144, 0.25, 0.540976, 0.803022, 7.55111, 5.78835, 5.80851)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball4"]
+mesh = SubResource("CylinderMesh_yp0py")
+skeleton = NodePath("../../Ball4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball4"]
+shape = SubResource("CylinderShape3D_pubd0")
+
+[node name="Ball2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 6, 7.5, 7.06218)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball2"]
+mesh = SubResource("CylinderMesh_yp0py")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball2"]
+shape = SubResource("CylinderShape3D_pubd0")
+
 [node name="Ball" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.88889, 0.888889, -1.11111)
 freeze_mode = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
@@ -66,22 +108,52 @@ mesh = SubResource("CylinderMesh_yp0py")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
 shape = SubResource("CylinderShape3D_pubd0")
 
-[node name="Ball" type="RigidBody3D" parent="Ball"]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 3, 2, 1)
+[node name="Ball5" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.11111, 1.88889, -1.11111)
 freeze_mode = 1
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball/Ball"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball5"]
 mesh = SubResource("CylinderMesh_yp0py")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball/Ball"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball5"]
 shape = SubResource("CylinderShape3D_pubd0")
 
-[node name="Ball" type="RigidBody3D" parent="Ball/Ball"]
-transform = Transform3D(0.258819, -0.836516, 0.482963, 0.836516, -0.0558857, -0.545085, 0.482963, 0.545085, 0.685295, 1.55111, -1.32885, -1.65396)
+[node name="Ball6" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33333, 3, 7.77778)
 freeze_mode = 1
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball/Ball/Ball"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball6"]
 mesh = SubResource("CylinderMesh_yp0py")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball/Ball/Ball"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball6"]
+shape = SubResource("CylinderShape3D_pubd0")
+
+[node name="Ball7" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.66667, 3, 7.77778)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball7"]
+mesh = SubResource("CylinderMesh_yp0py")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball7"]
+shape = SubResource("CylinderShape3D_pubd0")
+
+[node name="Ball8" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.66667, 3, 17.7778)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball8"]
+mesh = SubResource("CylinderMesh_yp0py")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball8"]
+shape = SubResource("CylinderShape3D_pubd0")
+
+[node name="Ball9" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6667, 3, 17.7778)
+freeze_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball9"]
+mesh = SubResource("CylinderMesh_yp0py")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball9"]
 shape = SubResource("CylinderShape3D_pubd0")
