@@ -1,2 +1,2 @@
 # ProjectM
-3D game inspired by the Mistborn books
+3D game
